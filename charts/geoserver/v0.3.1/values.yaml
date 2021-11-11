@@ -1,7 +1,7 @@
 image:
   registry: docker.io
   repository: kartoza/geoserver
-  tag: "2.17.0"
+  tag: "2.19.2"
   pullPolicy: IfNotPresent
 
 geoserverDataDir: /opt/geoserver/data_dir
@@ -55,8 +55,9 @@ service:
   ## GeoServer service type
   type: ClusterIP
   # clusterIP: ""
-  # externalIPs: ""
-  port: 80
+  externalIPs:
+    - 172.25.16.187
+  port: 8080
 
   # nodePort:
 
@@ -69,10 +70,10 @@ service:
   # - 10.10.10.0/24
 
 ingress:
-  enabled: false
-  annotations: {}
+  enabled: true
+  annotations: {kubernetes.io/ingress.class: "kong"}
   labels: {}
-  host: geoserver.hostname
+  host: no-url
   tls:
     enabled: false
     ## Provide secret name if tls is enabled
@@ -90,7 +91,7 @@ persistence:
     existingClaim: false
     mountPath: /opt/geoserver/data_dir
     subPath: "data_dir"
-    size: 8Gi
+    size: 20Gi
     # storageClass: "-"
     accessModes:
       - ReadWriteOnce
@@ -100,7 +101,7 @@ persistence:
     existingClaim: false
     mountPath: /opt/geoserver/data_dir/gwc
     subPath: "gwc"
-    size: 8Gi
+    size: 10Gi
     # storageClass: "-"
     accessModes:
       - ReadWriteOnce
