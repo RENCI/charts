@@ -22,7 +22,7 @@ spec:
   {{- end }}
   ports:
     - name: http-geoserver
-      port: {{ .Values.service.port }}
+      port: 80
       protocol: TCP
       targetPort: http-geoserver
   selector:
