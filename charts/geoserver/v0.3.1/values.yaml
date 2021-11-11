@@ -1,7 +1,7 @@
 image:
   registry: docker.io
   repository: kartoza/geoserver
-  tag: "2.19.2"
+  tag: "2.17.0"
   pullPolicy: IfNotPresent
 
 geoserverDataDir: /opt/geoserver/data_dir
@@ -12,6 +12,14 @@ geoserverUser: admin
 # For prefilled password
 # It will be stored in secret later
 geoserverPassword:
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 10Gi
+  requests:
+    cpu: 500m
+    memory: 10Gi
 
 # Use this if you have predefined secrets
 existingSecret: |
@@ -55,9 +63,8 @@ service:
   ## GeoServer service type
   type: ClusterIP
   # clusterIP: ""
-  externalIPs:
-    - 172.25.16.187
-  port: 8080
+  # externalIPs: ""
+  port: 80
 
   # nodePort:
 
@@ -71,9 +78,9 @@ service:
 
 ingress:
   enabled: true
-  annotations: {kubernetes.io/ingress.class: "kong"}
+  annotations: {}
   labels: {}
-  host: no-url
+  host: geoserver.apps.renci.org
   tls:
     enabled: false
     ## Provide secret name if tls is enabled

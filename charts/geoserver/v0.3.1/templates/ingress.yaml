@@ -24,7 +24,7 @@ spec:
       paths:
       - backend:
           serviceName: {{ template "geoserver.fullname" . }}
-          servicePort: 8080
+          servicePort: 80
         path: /geoserver
   {{- if .Values.ingress.tls.enabled }}
   tls:
